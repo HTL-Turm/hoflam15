@@ -1,5 +1,8 @@
 {
-
+    "server": {
+        "disabled": "true",
+        "port": 4711
+    },
     "debug": {
         "depth": 3,
         "colors" : true,
@@ -11,6 +14,7 @@
         "enabled": "*, *::WARN, *::INFO"
     },
     "logfile": {
-        "serverlog": { "disabled": false, "filename": "/tmp/htl-turm-server.log", "namespaces": "*::INFO, *::WARN", "locationNamespaces": "-*" }
+        "serverlog": { "disabled": false, "filename": "/tmp/htl-turm-server.log", "namespaces": "*::INFO, *::WARN", "locationNamespaces": "-*" },
+        "serverlog-all-with-locations": { "disabled": true, "filename": "/tmp/htl-turm-server.log", "namespaces": "*", "locationNamespaces": "*" }
     }
 }

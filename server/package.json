@@ -8,8 +8,8 @@
     "license": "MIT",
     "private": true,
     "scripts": {
-        "run": "node dist/main.js",
-        "compile": "tsc -p ./",
+        "start": "node dist/main.js",
+        "build": "tsc -p ./",
         "clean": "rm -r dist/*",
         "lint": "tslint -p ./",
         "test": "echo \"Error: no test specified\" && exit 1"

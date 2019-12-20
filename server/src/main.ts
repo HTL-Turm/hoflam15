@@ -2,9 +2,12 @@ export const VERSION = '0.0.1';
 
 console.log('start of server application V' + VERSION);
 
-import * as nconf from 'nconf';
+// Node.js Module
 import * as fs from 'fs';
 import * as path from 'path';
+
+// Externe Module
+import * as nconf from 'nconf';
 
 process.on('unhandledRejection', (reason, p) => {
     const now = new Date();
@@ -78,7 +81,7 @@ doStartup().then( () => {
 
 async function doStartup () {
     try {
-        debug.fine('doStartup() - start')
+        debug.fine('doStartup() - start');
         await delayMillis(2000);
     } catch (err) {
         debug.severe('debug fails\n%e', err);
