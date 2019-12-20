@@ -1,9 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { UserService } from './services/user.service';
+import { ServerService } from './services/server.service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,11 +24,11 @@ import { SyncButtonComponent } from './components/sync-button.component';
   ],
   imports: [
     NgbModule,
-    BrowserModule,
+    BrowserModule, HttpClientModule,
     AppRoutingModule,
     FontAwesomeModule
   ],
-  providers: [ UserService ],
+  providers: [ UserService, ServerService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

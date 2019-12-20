@@ -11,9 +11,13 @@ import * as http from 'http';
 
 // External modules
 import * as express from 'express';
+import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 
 import { handleError, RouterError, BadRequestError, AuthenticationError, NotFoundError } from './routers/router-error';
+import { VERSION } from '../main';
+import { ICommandRequest, ICommandResponse } from '../data/common/command';
+import { IServerVersion } from '../data/common/server-version';
 
 export interface IServerConfig {
         disabled?: boolean;
@@ -58,10 +62,12 @@ export class Server {
     public async start () {
         this._express = express();
         this._express.use(cors()); // allow cross origin resource sharing
-        // this._express.use(bodyParser.json());
-        // this._express.use(bodyParser.urlencoded({ extended: true }) );
+        this._express.use(bodyParser.json());
+        this._express.use(bodyParser.urlencoded({ extended: true }) );
         // this._express.use('/node_modules', express.static(path.join(__dirname, '../node_modules')));
         this._express.get('/*', (req, res, next) => this.handleGet(req, res, next));
+        this._express.get('/version', (req, res, next) => this.handleVersion(req, res, next));
+        this._express.put('/cmd', (req, res, next) => this.handleCommand(req, res, next));
 
 
         this._express.use(
@@ -141,6 +147,31 @@ export class Server {
         next();
         // throw new BadRequestError('request not supported');
         // res.send('Hallo');
+    }
+
+    private handleVersion (req: express.Request, res: express.Response, next: express.NextFunction) {
+        const rv: IServerVersion = {
+            version: VERSION,
+            name: 'htl-turm-server'
+        };
+        res.json(rv);
+    }
+
+    private handleCommand (req: express.Request, res: express.Response, next: express.NextFunction) {
+        try {
+            const data: ICommandRequest = req.body;
+            if (!data || !data.command) {
+                throw new BadRequestError('request PUT /cmd fails, invalid/missing body');
+            }
+            debug.info('command: %s', data.command);
+            const rv: ICommandResponse = {
+                status: 'OK'
+            };
+            res.json(rv);
+
+        } catch (err) {
+            handleError(err, req, res, next, debug);
+        }
     }
 
 }

@@ -1,6 +1,8 @@
 {
   "extends": "tslint:recommended",
   "rules": {
+    "space-before-function-paren": true,
+    "variable-name": false,
     "array-type": false,
     "arrow-parens": false,
     "deprecation": {
