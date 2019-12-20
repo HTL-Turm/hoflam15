@@ -109,7 +109,37 @@ export class Server {
 
     private handleGet (req: express.Request, res: express.Response, next: express.NextFunction) {
         debug.finer('request GET %s from socket %s:%s', req.originalUrl, req.socket.remoteAddress, req.socket.remotePort);
-        throw new BadRequestError('request not supported');
+        if (req.url === '/' || req.url === '/index.html' || req.url.startsWith('/app') ) {
+            const indexFileName = path.join(__dirname, '../../../ngx/dist/lightning-tower/index.html');
+            res.sendFile(indexFileName);
+            return;
+        }
+        if (req.url === '/favicon.ico') {
+            try {
+                const fileName = path.join(__dirname, '..', 'assets/public/favicon.ico');
+                res.sendFile(fileName);
+                // todo(sx): check wghen favicon file not available (no error thrown)
+            } catch (err) {
+                // throw new NotFoundError('favicon.ico not found', err);
+                res.status(404);
+                res.end();
+            }
+            return;
+        }
+        let fn = path.join(__dirname, '../../../ngx/dist/lightning-tower/', req.url);
+        try {
+            const index = fn.indexOf('?');
+            if (index > 0) {
+                fn = fn.substr(0, index);
+            }
+            fs.accessSync(fn, fs.constants.R_OK);
+            res.sendFile(fn);
+            return;
+        } catch (err) {
+        }
+
+        next();
+        // throw new BadRequestError('request not supported');
         // res.send('Hallo');
     }
 

@@ -1,0 +1,11 @@
+{
+    "name": "htl-turm",
+    "version": "0.0.1",
+    "description": "Node.js/Express web-server and Angular client for htl-turm",
+    "main": "server/dist/main.js",
+    "scripts": {
+        "start": "cd server; node dist/main.js",
+        "build": "cd server; tsc",
+        "clean": "cd server; rm -r dist/*"
+    }
+}
