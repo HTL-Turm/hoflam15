@@ -70,6 +70,7 @@ if (logfileConfig) {
 
 import { sprintf } from 'sprintf-js';
 import { Server } from './server/server';
+import { Serial } from './serial/serial';
 
 doStartup().then( () => {
     debug.info('startup server V%s successfully finished', VERSION);
@@ -82,9 +83,11 @@ doStartup().then( () => {
 async function doStartup () {
     try {
         debug.fine('doStartup() - start');
+        await delayMillis(100);
+        const serial = await Serial.createInstance(nconf.get('serial'));
         const server = await Server.createInstance(nconf.get('server'));
         await server.start();
-        await delayMillis(2000);
+        
     } catch (err) {
         debug.severe('debug fails\n%e', err);
         throw err;

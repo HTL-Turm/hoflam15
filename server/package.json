@@ -21,6 +21,7 @@
         "@types/nconf": "^0.10.0",
         "@types/node": "^12.12.21",
         "@types/sprintf-js": "^1.1.2",
+        "@types/serialport": "^7.0.4",
         "tslint": "^5.20.1",
         "typescript": "^3.7.3"
     },
@@ -31,6 +32,7 @@
         "debug-sx": "^0.2.4",
         "express": "^4.17.1",
         "nconf": "^0.10.0",
+        "serialport": "^8.0.5",
         "sprintf-js": "^1.1.2"
     }
 }

@@ -3,6 +3,15 @@
         "disabled": "true",
         "port": 4711
     },
+    "serial": {
+        "disabled": true,
+        "device": "/dev/ttyUSB0",
+        "options": {
+            "baudRate": 57600,
+            "parity": "none",
+            "dataBits": 8
+        }
+    },
     "debug": {
         "depth": 3,
         "colors" : true,
@@ -11,7 +20,7 @@
         "wmodule": 15,
         "wlevel": 6,
         "location": "-*",
-        "enabled": "*::WARN, *::INFO, *::CONFIG, *::FINE, *::FINER "
+        "enabled": "*::WARN, *::INFO, *::CONFIG, *::FINE, *::FINER, *::FINEST"
     },
     "logfile": {
         "serverlog": { "disabled": false, "filename": "/tmp/htl-turm-server.log", "namespaces": "*::INFO, *::WARN", "locationNamespaces": "-*" },
