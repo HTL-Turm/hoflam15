@@ -62,7 +62,7 @@ export function handleError (err: Error,  req: Request, res: Response, next: Nex
         req.body.password = pw[0] + new Array(pw.length - 1).join('*');
     }
     if (err.cause) {
-        debug.info('%s\n  %s\n  %s %s\n%o\n%e', msg, ts, req.method, req.originalUrl, req.body, err.cause);
+        debug.info('%s\n  %s\n  %s %s\n%o\nCaused by %e', msg, ts, req.method, req.originalUrl, req.body, err.cause);
     } else {
         debug.info('%s\n  %s\n  %s %s\n%o', msg, ts, req.method, req.originalUrl, req.body);
     }
@@ -77,17 +77,26 @@ export function handleError (err: Error,  req: Request, res: Response, next: Nex
 
     if (req.headers.accept && req.headers.accept.indexOf('application/json') >= 0) {
         switch (status) {
-            case 400: res.status(400).json({ error: 'Bad Request', ts: ts}); break;
-            case 401: res.status(401).json({ error: 'Unauthorized', ts: ts}); break;
-            case 404: res.status(404).json({ error: 'Not Found', ts: ts}); break;
+            case 400: res.status(status).json({ error: 'Bad Request', ts: ts}); break;
+            case 401: res.status(status).json({ error: 'Unauthorized', ts: ts}); break;
+            case 404: res.status(status).json({ error: 'Not Found', ts: ts}); break;
             default: next(err);
         }
     } else {
-        switch (status) {
-            case 400: res.status(400).render('error400.pug', { time: ts }); break;
-            case 401: res.status(401).render('error401.pug', { time: ts }); break;
-            case 404: res.status(404).render('error404.pug', { time: ts }); break;
-            default: next(err);
+        try {
+            switch (status) {
+                case 400: res.status(status).render('error400.pug', { time: ts }); break;
+                case 401: res.status(status).render('error401.pug', { time: ts }); break;
+                case 404: res.status(status).render('error404.pug', { time: ts }); break;
+                default: next(err);
+            }
+        } catch (err) {
+            switch (status) {
+                case 400: res.status(status).send('Bad request (' + ts + ')'); break;
+                case 401: res.status(status).send('Unauthorized (' + ts + ')'); break;
+                case 404: res.status(status).send('Not found (' + ts + ')'); break;
+                default: next(err);
+            }
         }
     }
 }

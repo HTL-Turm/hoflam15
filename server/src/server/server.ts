@@ -66,6 +66,7 @@ export class Server {
         this._express.use(bodyParser.urlencoded({ extended: true }) );
         // this._express.use('/node_modules', express.static(path.join(__dirname, '../node_modules')));
         this._express.get('/*', (req, res, next) => this.handleGet(req, res, next));
+        this._express.get('/test', (req, res, next) => this.handleTest(req, res, next));
         this._express.get('/version', (req, res, next) => this.handleVersion(req, res, next));
         this._express.put('/cmd', (req, res, next) => this.handleCommand(req, res, next));
 
@@ -121,15 +122,11 @@ export class Server {
             return;
         }
         if (req.url === '/favicon.ico') {
-            try {
-                const fileName = path.join(__dirname, '..', 'assets/public/favicon.ico');
-                res.sendFile(fileName);
-                // todo(sx): check wghen favicon file not available (no error thrown)
-            } catch (err) {
-                // throw new NotFoundError('favicon.ico not found', err);
-                res.status(404);
-                res.end();
-            }
+            const fileName = path.join(__dirname, '..', 'assets/public/favicon.ico');
+            res.sendFile(fileName, (err) => {
+                debug.warn('favicon.ico not found (%s)', fileName);
+                res.status(404).end();
+            });
             return;
         }
         let fn = path.join(__dirname, '../../../ngx/dist/lightning-tower/', req.url);
@@ -145,8 +142,14 @@ export class Server {
         }
 
         next();
-        // throw new BadRequestError('request not supported');
-        // res.send('Hallo');
+    }
+
+    private handleTest (req: express.Request, res: express.Response, next: express.NextFunction) {
+        try {
+            throw new BadRequestError('Test', new Error('Cause'));
+        } catch (err) {
+            handleError(err, req, res, next, debug);
+        }
     }
 
     private handleVersion (req: express.Request, res: express.Response, next: express.NextFunction) {
