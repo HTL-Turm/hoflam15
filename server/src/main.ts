@@ -69,7 +69,7 @@ if (logfileConfig) {
 // ***********************************************************
 
 import { sprintf } from 'sprintf-js';
-// import { Server } from './server';
+import { Server } from './server/server';
 
 doStartup().then( () => {
     debug.info('startup server V%s successfully finished', VERSION);
@@ -82,6 +82,8 @@ doStartup().then( () => {
 async function doStartup () {
     try {
         debug.fine('doStartup() - start');
+        const server = await Server.createInstance(nconf.get('server'));
+        await server.start();
         await delayMillis(2000);
     } catch (err) {
         debug.severe('debug fails\n%e', err);
