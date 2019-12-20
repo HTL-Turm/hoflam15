@@ -1,27 +1,30 @@
 {
-  "name": "server",
-  "version": "0.0.1",
-  "description": "Server",
-  "main": "main.js",
-  "scripts": {
-    "start": "cd server; node dist/main.js",
-    "build": "cd server; node_modules/gulp/bin/gulp.js --gulpfile gulpfile.js build",
-    "remote": "cd server; node_modules/gulp/bin/gulp.js --gulpfile gulpfile.js remotePlatform",
-    "remote-init": "cd server; node_modules/gulp/bin/gulp.js --gulpfile gulpfile.js remoteInit",
-    "ngx-new": "test -d ngx || ng new ngx; mkdir ngx/src/app/server;",
-    "ngx": "test -d ngx || ng new ngx; cd ngx; mkdir src/app/server; ng build --prod",
-    "clean": "cd server; node_modules/gulp/bin/gulp.js --gulpfile gulpfile.js clean",
-    "cleanall": "cd server; node_modules/gulp/bin/gulp.js --gulpfile gulpfile.js cleanAll"
-  },
-  "author": "Lara Hofer",
-  "license": "MIT",
-  "devDependencies": {
-    "@types/debug": "^4.1.5",
-    "typescript": "^3.7.3"
-  },
-  "dependencies": {
-    "@types/node": "^12.12.21",
-    "common-logger": "^0.2.0",
-    "debug": "^4.1.1"
-  }
+    "name": "server",
+    "version": "0.0.1",
+    "description": "Node.js/express server for htl-turm",
+    "author": "",
+    "main": "dist/main.js",
+    "repository": "",
+    "license": "MIT",
+    "private": true,
+    "scripts": {
+        "run": "node dist/main.js",
+        "compile": "tsc -p ./",
+        "clean": "rm -r dist/*",
+        "lint": "tslint -p ./",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "devDependencies": {
+        "@types/nconf": "^0.10.0",
+        "@types/node": "^12.12.21",
+        "@types/sprintf-js": "^1.1.2",
+        "tslint": "^5.20.1",
+        "typescript": "^3.7.3"
+    },
+    "dependencies": {
+        "@types/debug": "^4.1.5",
+        "debug-sx": "^0.2.4",
+        "nconf": "^0.10.0",
+        "sprintf-js": "^1.1.2"
+    }
 }

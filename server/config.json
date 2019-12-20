@@ -1,0 +1,16 @@
+{
+
+    "debug": {
+        "depth": 3,
+        "colors" : true,
+        "wtimediff": 6,
+        "time": "ddd, yyyy-mm-dd HH:MM:ss.l",
+        "wmodule": 15,
+        "wlevel": 6,
+        "location": "-*",
+        "enabled": "*, *::WARN, *::INFO"
+    },
+    "logfile": {
+        "serverlog": { "disabled": false, "filename": "/tmp/htl-turm-server.log", "namespaces": "*::INFO, *::WARN", "locationNamespaces": "-*" }
+    }
+}
