@@ -2,9 +2,12 @@ export const VERSION = '0.0.1';
 
 console.log('start of server application V' + VERSION);
 
-import * as nconf from 'nconf';
+// Node.js Module
 import * as fs from 'fs';
 import * as path from 'path';
+
+// Externe Module
+import * as nconf from 'nconf';
 
 process.on('unhandledRejection', (reason, p) => {
     const now = new Date();
@@ -66,7 +69,8 @@ if (logfileConfig) {
 // ***********************************************************
 
 import { sprintf } from 'sprintf-js';
-// import { Server } from './server';
+import { Server } from './server/server';
+import { Serial } from './serial/serial';
 
 doStartup().then( () => {
     debug.info('startup server V%s successfully finished', VERSION);
@@ -78,8 +82,12 @@ doStartup().then( () => {
 
 async function doStartup () {
     try {
-        debug.fine('doStartup() - start')
-        await delayMillis(2000);
+        debug.fine('doStartup() - start');
+        await delayMillis(100);
+        const serial = await Serial.createInstance(nconf.get('serial'));
+        const server = await Server.createInstance(nconf.get('server'));
+        await server.start();
+        
     } catch (err) {
         debug.severe('debug fails\n%e', err);
         throw err;
