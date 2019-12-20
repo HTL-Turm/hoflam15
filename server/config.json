@@ -11,7 +11,7 @@
         "wmodule": 15,
         "wlevel": 6,
         "location": "-*",
-        "enabled": "*, *::WARN, *::INFO"
+        "enabled": "*::WARN, *::INFO, *::CONFIG, *::FINE, *::FINER "
     },
     "logfile": {
         "serverlog": { "disabled": false, "filename": "/tmp/htl-turm-server.log", "namespaces": "*::INFO, *::WARN", "locationNamespaces": "-*" },
