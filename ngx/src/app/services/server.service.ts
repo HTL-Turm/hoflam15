@@ -11,8 +11,8 @@ export class ServerService {
     constructor (private httpClient: HttpClient) {
         // ng serve      --> development mode, server running on same host
         // npm run build --prod --> production mode, server can run on any host and supports loading ngx app
-        // this._serverUri = isDevMode() ? 'http://localhost:4711' : '';
-        this._serverUri = isDevMode() ? 'http://10.200.99.85:4711' : '';
+         this._serverUri = isDevMode() ? 'http://localhost:4711' : '';
+        // this._serverUri = isDevMode() ? 'http://10.200.99.85:4711' : '';
         // this._serverUri = isDevMode() ? 'http://pi-xxxx:4711' : '';
     }
 
